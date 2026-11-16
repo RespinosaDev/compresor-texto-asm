@@ -1,10 +1,8 @@
 # Compresor de texto · Ensamblador MC88110
 
-Compresor y descompresor de cadenas de texto escrito en **ensamblador del MC88110**. Usa un algoritmo de la familia **LZ77**: cada vez que un fragmento del texto ya ha aparecido antes, se sustituye por una referencia `(posición, longitud)` a esa aparición anterior.
+Compresor y descompresor de cadenas de texto escrito en **ensamblador del MC88110**. Usa un algoritmo parecido a **LZ77**: cuando un trozo del texto ya ha salido antes, se cambia por una referencia `(posición, longitud)` a donde apareció la primera vez.
 
-> 🎓 **Proyecto académico**: práctica de la asignatura *Estructura de Computadores* (Grado en Ingeniería Informática)<br>
-> Universidad Politécnica de Madrid · Campus de Montegancedo<br>
-> 👥 Trabajo individual
+Es una práctica de la asignatura *Estructura de Computadores* (Grado en Ingeniería Informática, Universidad Politécnica de Madrid). La hice de forma individual.
 
 ---
 
@@ -48,9 +46,9 @@ El programa principal (`ppal`) descomprime uno de los casos de prueba del enunci
 
 Se ensambla y ejecuta con el **emulador del MC88110** que proporciona la asignatura (ficheros `.ens`). El código empieza en `0x1000` y la pila se inicializa en `0xF000`.
 
-## Correcciones respecto a la entrega
+## Qué corregí respecto a la entrega
 
-Al revisar el código para publicarlo se corrigieron dos fallos que no se manifestaban con los casos de prueba de la entrega:
+Al repasar el código para subirlo encontré dos fallos que no salían con los casos de prueba de la entrega:
 
 - **Mapa de bits sin inicializar.** Al empezar cada byte nuevo del mapa había que ponerlo a `0`, pero la condición (`bb0 ne, r10`) miraba un bit del propio valor y no el resultado de una comparación, así que nunca se limpiaba. Funcionaba solo porque la memoria del simulador empieza a cero.
 - **Textos de menos de 8 caracteres.** `Descomprime` copiaba siempre `M·8` caracteres iniciales aunque el texto fuera más corto, y el `\0` final quedaba en una posición incorrecta.
